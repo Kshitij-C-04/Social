@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login Form</title>
+    <link rel="stylesheet" href="mini_project.css" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" href="favicon-32x32.png" type="image/png" />
+  </head>
+  <body>
+    <video  autoplay  muted playsinline>
+      <source src="logo.mp4">
+  </video>
+    <div class="form">
+      <form id="loginForm">
+        <h1>Melon</h1>
+        <div class="input-box">
+          <input type="text" name="username" id="username" placeholder="Username" required />
+          <i class="bx bxs-user"></i>
+        </div>
+        <div class="input-box">
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Password"
+            required
+          />
+          <i class="bx bxs-lock-alt"></i>
+        </div>
+        <button type="submit" class="btn">Login</button>
+        <div class="register-link">
+          <p>Don't have an account? <a href="mini_signup.html">Sign up</a></p>
+        </div>
+      </form>
+    </div>
+
+    <script>
+      document
+        .getElementById("loginForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+
+          let username = document.getElementById("username").value;
+          const password = document.getElementById("password").value;
+          console.log(`Username: ${username}, Password: ${password}`);
+          // let uname = username;
+          // let len = uname.length;
+          // let usersname = uname +"@"+ len;
+          // console.log(usersname);
+          // document.getElementById("loginForm").reset();
+        });
+    </script>
+  </body>
+</html>

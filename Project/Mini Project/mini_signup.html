@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign up</title>
+    <link rel="stylesheet" href="mini_signup.css" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" href="favicon-32x32.png" type="image/png" />
+</head>
+<body>
+    
+      <video  autoplay  muted playsinline>
+        <source src="logo.mp4">
+    </video>
+      
+      <div class="form">
+        <form action="signup.php" method="post" id="loginForm">
+          <h1>Melon</h1>
+          <div class="input-box">
+            <input type="text" id="username" placeholder="Name" required />
+            <i class="bx bxs-user"></i>
+          </div>
+          <div class="input-box">
+            <input
+              type="password"
+              id="password"
+              placeholder="New Password"
+              required
+            />
+            <i class="bx bxs-lock-alt"></i>
+          </div>
+          <div class="input-box">
+            <input type="number" min="15" max="100" id="age" placeholder="Age" required />
+          </div>
+          <div class="gender-selector">
+            <label class="gender-option">
+                <input type="radio" name="gender" value="male">
+                <img src="male.png" alt="Male">
+                <span>Male</span>
+            </label>
+
+            <label class="gender-option">
+                <input type="radio" name="gender" value="female">
+                <img src="female.png" alt="Female">
+                <span>Female</span>
+            </label>
+
+        </div>
+          <button type="submit" class="btn">Sign up</button>
+          <div class="register-link">
+            <p>Already have an account?<a href="mini_project.html"> Login</a></p>
+          </div>
+        </form>
+      </div>
+      <script>
+        document
+        .getElementById("loginForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+
+          let username = document.getElementById("username").value;
+          let uname = username;
+          let len = uname.length;
+          let usersname = uname +"@"+ len;
+          console.log(usersname);
+          document.getElementById("loginForm").reset();
+        });
+      </script>
+</body>
+</html>

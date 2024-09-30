@@ -1,8 +1,35 @@
+
+
 <?php
 session_start();
 error_reporting(0);
 ?>
+<?php
+session_start();
+include('db.php');
 
+if (!isset($_SESSION['username'])) {
+    header("Location: login.php");
+    exit();
+}
+
+
+$username = $_SESSION['username'];
+$selectedUser = '';
+
+
+
+if (isset($_GET['user'])) {
+    $selectedUser = $_GET['user'];
+    $selectedUser    = mysqli_real_escape_string($conn, $selectedUser);
+    $showChatBox = true; 
+} else {
+    $showChatBox = false; 
+}
+
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,6 +40,7 @@ error_reporting(0);
     <link rel="stylesheet" href="home.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    lin
 </head>
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400&family=Poppins:wght@300;400;500;600&family=Roboto:wght@500&display=swap");
@@ -330,7 +358,12 @@ main .container .right {
   bottom: 0;
   right: 0;
 }
-
+.message-body ul {
+  text-align:center;
+  text-decoration:none;
+  padding-left:4em
+  
+}
 /* ==== Theme Customization ==== */
 
 .customize-theme {
@@ -452,6 +485,111 @@ main .container .right {
   margin-right: 1rem;
 }
 
+
+        /* User list styles */
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        ul li {
+            margin-bottom: 10px;
+            background-color: #333;
+            border-radius: 8px;
+            padding: 10px;
+        }
+
+        ul li a {
+            color: white;
+            text-decoration: none;
+        }
+
+        /* Chat box styles */
+        .chat-box {
+            position: fixed;
+            bottom: 0;
+            right: -400px; /* Initially off-screen */
+            width: 400px;
+            height: 500px;
+            background-color: white;
+            border: 2px solid black;
+            border-radius: 10px;
+            transition: right 0.5s ease;
+            display: none; /* Hidden initially */
+        }
+
+        /* Chat header */
+        .chat-box-header {
+            background-color: grey;
+            color: white;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            
+        }
+
+        .close-btn {
+            background-color: transparent;
+            border: none;
+            color: black;
+            font-size: 30px;
+            cursor: pointer;
+        }
+  .chat-box-body {
+    padding: 10px;
+    overflow-y: auto;
+    max-height: 300px;
+
+}
+
+.message-sent {
+    background-color: red;
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: right;
+    
+}
+
+.message-received {
+    background-color: #f1f1f1;
+    margin: 5px 0;
+    padding: 5px;
+    border-radius: 5px;
+    text-align: left;
+}
+
+/* Chat Box Body */
+.chat-box-body {
+    padding: 10px;
+    overflow-y: auto;
+    max-height: 300px;
+    display: flex; /* Enable flexbox for layout */
+    flex-direction: column; /* Stack messages vertically */
+}
+
+/* Chat Form */
+.chat-form {
+    padding: 10px;
+    background-color: #fff;
+    border: 2px solid black;
+    border-radius: 7px;
+    position: relative; /* Relative positioning to avoid fixed issues */
+    bottom: 0;
+}
+
+/* Input Styles */
+.chat-form input[type="text"] {
+    width: 80%; /* Takes 80% of form width */
+    padding: 5px;
+}
+
+/* Button Styles */
+.chat-form button {
+    padding: 5px 10px; /* Add padding to button */
+}
+
+
 /* ===== Media Queries for-> 992px ===== */
 
 @media screen and (max-width: 992px) {
@@ -556,7 +694,7 @@ main .container .right {
                         <span><i class="uil uil-home"></i></span><h3>Home</h3> 
                     </a>
         
-                    <a class="menu-item" id="messages-notification">
+                    <a class="menu-item" id="messages-notification" href="chat.php">
                         <span><i class="uil uil-envelope"></i></span><h3>Messages</h3>
                     </a> 
                   
@@ -569,7 +707,7 @@ main .container .right {
                     <a class="menu-item" href="logout.php">
                         <span><i class="uil uil-sign-in-alt"></i></span><h3>Logout</h3>
                     </a>   
-                    <a href="chat.php" id="openChat">msg</a>
+                    
                 </div>               
             </div>
 
@@ -902,68 +1040,55 @@ $randomImage7 = $images[array_rand($images)];
                     
                     <!-- message -->
                     <div class="message">
-                        <div class="profile-photo">
-                            <img src="profile-17.jpg" >
-                        </div>
-                        <div class="message-body">
-                            <h5>Edem Quist</h5>
-                            
-                        </div>
-                    </div>
-                    <!-- message -->
-                    <div class="message">
-                        <div class="profile-photo">
-                            <img src="profile-3.jpg" >
-                        </div>
-                        <div class="message-body">
-                            <h5>France Deila</h5>
-                            
-                        </div>
-                    </div>
-                    <!-- message -->
-                    <div class="message">
-                        <div class="profile-photo">
-                            <img src="profile-4.jpg" >
-                           
-                        </div>
-                        <div class="message-body">
-                            <h5>Jane Doe</h5>
-                            
-                        </div>
-                    </div>
-                    <!-- message -->
-                    <div class="message">
-                        <div class="profile-photo">
-                            <img src="profile-5.jpg" >
-                        </div>
-                        <div class="message-body">
-                            <h5>Daniel Jakson</h5>
-                            
-                        </div>
-                    </div>
-                    <!-- message -->
-                    <div class="message">
-                        <div class="profile-photo">
-                            <img src="profile-6.jpg" >
-                        </div>
-                        <div class="message-body">
-                            <h5>Justin Heoi</h5>
-                            
-                        </div>
-                    </div>
-                    <!-- message -->
-                    <div class="message">
-                        <div class="profile-photo">
-                            <img src="profile-7.jpg" >
-                           
-                        </div>
-                        <div class="message-body">
-                            <h5>Chantel Msiza</h5>
-                           
-                        </div>
-                    </div>
-                </div>
-                <!-- End of Message -->
+                      
+                     
+                  
+<div class="container1">
+    <div class="account-info">
+        <div class="user-list">
+            <div class="message-body">
+                <ul>
+                    <?php 
+                    $sql = "SELECT username FROM users WHERE username != '$username'";
+                    $result = $conn->query($sql);
+                    if ($result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) {
+                            $user = $row['username'];
+                            $user = ucfirst($user);
+                            echo "<li><a href='#' onclick='openChatBox(\"$user\")'>$user</a></li>";
+                        }
+                    }
+                    ?>
+                </ul>
+            </div>
+        </divf>
+    </div>
+</div>
+
+<!-- Chat Box -->
+<div class="chat-box" id="chat-box" style="display: none; right: -400px;">
+    <div class="chat-box-header">
+        <h2 id="chat-username"></h2>
+        <button class="close-btn" onclick="closeChatBox()">✖</button>
+    </div>
+
+    <div class="chat-box-body" id="chat-box-body" style="overflow-y: auto; max-height: 300px;">
+        <!-- Messages will be appended here -->
+    </div>
+
+    <!-- Message input form fixed at the bottom -->
+    <form class="chat-form" id="chat-form" style="position: fixed; bottom: 0; width: calc(400px - 20px); padding: 10px;">
+        <input type="hidden" id="sender" value="<?php echo $username; ?>">
+        <input type="hidden" id="receiver" value="">
+        <input type="text" id="message" placeholder="Type your message..." required style="width: 80%;">
+        <button type="submit" style="padding: 5px 10px;">Send</button>
+    </form>
+</div>
+
+
+
+
+
 
     <!-- Theme Customization -->
 
@@ -1007,6 +1132,94 @@ $randomImage7 = $images[array_rand($images)];
 
         </div>
     </div>
+
+   
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script>
+    // Function to open the chat box
+    function openChatBox(username) {
+        // Set the chat box username
+        document.getElementById('chat-username').textContent = username;
+        document.getElementById('receiver').value = username; // Set receiver
+
+        // Display the chat box and slide it in
+        let chatBox = document.getElementById('chat-box');
+        chatBox.style.display = 'block'; // Make it visible
+        chatBox.style.right = '0'; // Slide in from the right
+
+        // Fetch messages when the chat is opened
+        fetchMessages();
+    }
+
+    // Function to close the chat box
+    function closeChatBox() {
+        let chatBox = document.getElementById('chat-box');
+        chatBox.style.right = '-400px'; // Slide back out to the right
+        setTimeout(() => {
+            chatBox.style.display = 'none'; // Hide after sliding out
+        }, 500); // Wait for the sliding animation to finish
+    }
+
+    // Function to fetch messages
+    function fetchMessages() {
+        let sender = $('#sender').val();
+        let receiver = $('#receiver').val();
+        
+        if (receiver !== '') {
+            $.ajax({
+                url: 'fetch_messages.php',
+                type: 'POST',
+                data: { sender: sender, receiver: receiver },
+                success: function(data) {
+                    $('#chat-box-body').html(data); // Insert messages
+                    scrollChatToBottom(); // Scroll to bottom
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error fetching messages: " + error);
+                }
+            });
+        }
+    }
+
+    // Function to scroll the chat to the bottom
+    function scrollChatToBottom() {
+        let chatBox = $('#chat-box-body');
+        chatBox.scrollTop(chatBox.prop("scrollHeight"));
+    }
+
+    // Submit form to send a message
+    $('#chat-form').submit(function(e) {
+        e.preventDefault(); // Prevent form submission refresh
+        let sender = $('#sender').val();
+        let receiver = $('#receiver').val();
+        let message = $('#message').val();
+
+        if (message.trim() !== '') {
+            $.ajax({
+                url: 'submit_message.php',
+                type: 'POST',
+                data: { sender: sender, receiver: receiver, message: message },
+                success: function() {
+                    $('#message').val(''); // Clear input field after sending
+                    fetchMessages(); // Fetch messages again after sending
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error sending message: " + error);
+                }
+            });
+        } else {
+            alert('Please enter a message before sending.');
+        }
+    });
+
+    // Ensure messages are fetched every 3 seconds
+    $(document).ready(function() {
+        setInterval(fetchMessages, 3000);
+    });
+</script>
+
 
     <script src="home.js" ></script>
     

@@ -243,11 +243,11 @@ if (isset($_GET['user'])) {
             <h2>Messages:</h2>
             <ul>
                 <?php 
-                $sql = "SELECT username FROM users WHERE username != '$username'";
+                $sql = "SELECT name FROM signup WHERE name != '$name'";
                 $result = $conn->query($sql);
                 if ($result->num_rows > 0) {
                     while ($row = $result->fetch_assoc()) {
-                        $user = $row['username'];
+                        $user = $row['name'];
                         $user = ucfirst($user);
                         echo "<li><a href='chat.php?user=$user'>$user</a></li>";
                     }
